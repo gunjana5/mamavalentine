@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Valentine's Day Mom</title>
+    <!-- Elegant Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reset basic elements */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        height: 100vh;
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 2s ease-out;
+        position: relative;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      /* Bouncy banner animation */
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-20px);
+        }
+        60% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .banner {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 20px;
+        animation: bounce 2s infinite;
+        border-radius: 10px;
+      }
+
+      h1 {
+        font-family: "Pacifico", cursive;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        color: #d6336c;
+        transition: color 0.5s ease;
+      }
+
+      /* Pulse effect on hover */
+      h1:hover {
+        color: #ff3366;
+        animation: pulse 1s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .message {
+        font-size: 1.5rem;
+        margin-bottom: 30px;
+        color: #333;
+      }
+
+      .heart-button {
+        background: #ff6f91;
+        color: #fff;
+        border: none;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: transform 0.3s ease, background 0.3s ease;
+        outline: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .heart-button:hover {
+        transform: scale(1.1);
+        background: #ff3d81;
+      }
+
+      /* Heart float animation */
+      @keyframes float {
+        0% {
+          opacity: 1;
+          transform: translate(0, 0) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(0, -150px) scale(1.5);
+        }
+      }
+
+      .heart {
+        position: absolute;
+        font-size: 24px;
+        animation: float 3s ease-out forwards;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Top banner with the specified GIF -->
+      <img
+        class="banner"
+        src="https://media1.tenor.com/images/ad378799c23171ea5298cf4dacc91526/tenor.gif?itemid=15071379"
+        alt="Happy Valentine's Day Banner"
+      />
+      <h1>Happy Valentine's Day Mom</h1>
+      <p class="message">Wishing you endless love and happiness!</p>
+      <button class="heart-button" id="surpriseBtn">
+        Click for a Surprise
+      </button>
+      <!-- Extra cute GIF using the specified URL -->
+      <div style="margin-top: 20px">
+        <img
+          src="https://media.tenor.com/TNfKYA-LVToAAAAC/cute.gif"
+          alt="Cute Hearts"
+          style="
+            width: 150px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          "
+        />
+      </div>
+    </div>
+
+    <!-- Load confetti library from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <script>
+      // Function to create a heart element at specified (x, y) coordinates
+      function createHeart(x, y) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left = x + "px";
+        heart.style.top = y + "px";
+        heart.innerHTML = "❤️";
+        document.body.appendChild(heart);
+
+        // Remove the heart from the DOM after its animation completes
+        heart.addEventListener("animationend", () => {
+          heart.remove();
+        });
+      }
+
+      // Function to create a burst of hearts near a given element
+      function burstHearts(element) {
+        const rect = element.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        for (let i = 0; i < 10; i++) {
+          // Generate a small random offset for a natural burst effect
+          const offsetX = (Math.random() - 0.5) * 100;
+          const offsetY = (Math.random() - 0.5) * 100;
+          createHeart(centerX + offsetX, centerY + offsetY);
+        }
+      }
+
+      // Add an event listener to the button for interactive effects
+      const surpriseBtn = document.getElementById("surpriseBtn");
+      surpriseBtn.addEventListener("click", () => {
+        // Burst hearts around the button
+        burstHearts(surpriseBtn);
+        // Trigger confetti effect using canvas-confetti library
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+        });
+      });
+
+      // Create floating hearts following the mouse cursor for extra interactivity
+      document.addEventListener("mousemove", (e) => {
+        if (Math.random() < 0.05) {
+          // 5% chance on each mouse move event
+          createHeart(e.clientX, e.clientY);
+        }
+      });
+    </script>
+  </body>
+</html>
